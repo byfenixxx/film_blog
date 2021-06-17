@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <img src="{{ film.poster.url }}" style="display: block; margin-left: auto; margin-right: auto; width: 30%;">
+    <h6 style="margin-left: 40px; margin-right: 40px;">{{ film.description }}</h6>
+{% endblock %}
