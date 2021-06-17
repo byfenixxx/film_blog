@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "film_blog_db",
         "USERNAME": "sanzharkurmanbekov",
-        "PASSWORD": "",
+        "PASSWORD": "1",
         "HOST": "localhost",
         "POST": 5432,
     }
