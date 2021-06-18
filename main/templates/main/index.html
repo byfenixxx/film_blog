@@ -1,52 +1,55 @@
 {% extends 'base.html' %}
+
+{% load static %}
 {% block content %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <div class="alert alert-success" role="alert">
-        {{ message }}
-    </div>
-    {% endfor %}
-</ul>
-{% endif %}
-{% for film in page_object.object_list %}
-<div class="card mb-3" style="max-width: 540px;">
-    <div class="row g-0">
-        <div class="col-md-4">
-            <img src="{{ film.poster.url }}" alt="..." style="width: 80%;">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <a href="{% url 'film-detail' pk=film.id %}"><h5 class="card-title">{{ film.title }}</h5></a>
-                <p class="card-text">{{ film.description|truncatewords:10 }}</p>
-                <p class="card-text"><small class="text-muted">{{ film.pub_year }}</small></p>
-            </div>
-        </div>
-    </div>
+<div id="main">
+	<div class="inner">
+		<header>
+			<h1>This is Phantom, a free, fully responsive site<br/>
+				template designed by <a href="http://html5up.net">HTML5 UP</a>.</h1>
+			<p>Etiam quis viverra lorem, in semper lorem. Sed nisl arcu euismod sit amet nisi euismod sed cursus
+				arcu elementum ipsum arcu vivamus quis venenatis orci lorem ipsum et magna feugiat veroeros aliquam.
+				Lorem ipsum dolor sit amet nullam dolore.</p>
+		</header>
+		<section class="tiles">
+			{% for film in page_object.object_list %}
+			<article class="style1">
+									<span class="image">
+										<img src="{{ film.poster.url }}" alt=""/>
+									</span>
+				<a href="{% url 'film-detail' pk=film.id %}">
+					<h2>{{ film.title }}</h2>
+					<div class="content">
+						<p>{{ film.description|truncatewords:10 }}.</p>
+					</div>
+				</a>
+			</article>
+			{% endfor %}
+		</section>
+	</div>
 </div>
 
-{% endfor %}
 <nav aria-label="...">
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
-        </li>
+	<ul class="pagination">
+		<li class="page-item">
+			<a class="page-link" href="?page=1" tabindex="-1">First</a>
+		</li>
 
-        {% for n in page_object.paginator.page_range %}
+		{% for n in page_object.paginator.page_range %}
 
-        {% if page_object.number == n %}
-        <li class="page-item active" aria-current="page">
-            <a class="page-link" href="?page={{ n }}">{{ n }}</a>
-        </li>
-        {% elif n > page_object.number|add:-3 and n < page_object.number|add:3 %}
-        <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
-        {% endif %}
+		{% if page_object.number == n %}
+		<li class="page-item active" aria-current="page">
+			<a class="page-link" href="?page={{ n }}">{{ n }}</a>
+		</li>
+		{% elif n > page_object.number|add:-3 and n < page_object.number|add:3 %}
+		<li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+		{% endif %}
 
-        {% endfor %}
+		{% endfor %}
 
-        <li class="page-item">
-            <a class="page-link" href="?page={{ page_object.paginator.num_pages }}">Last</a>
-        </li>
-    </ul>
+		<li class="page-item">
+			<a class="page-link" href="?page={{ page_object.paginator.num_pages }}">Last</a>
+		</li>
+	</ul>
 </nav>
 {% endblock %}

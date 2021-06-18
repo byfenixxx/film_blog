@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% for film in page_object.object_list %}
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ film.poster.url }}" alt="..." style="width: 80%;">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <a href="{% url 'film-detail' pk=film.id %}"><h5 class="card-title">{{ film.title }}</h5></a>
+                <p class="card-text">{{ film.description|truncatewords:10 }}</p>
+                <p class="card-text"><small class="text-muted">{{ film.pub_year }}</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
+        </li>
+
+        {% for n in page_object.paginator.page_range %}
+
+        {% if page_object.number == n %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+        </li>
+        {% elif n > page_object.number|add:-3 and n < page_object.number|add:3 %}
+        <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+        {% endif %}
+
+        {% endfor %}
+
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_object.paginator.num_pages }}">Last</a>
+        </li>
+    </ul>
+</nav>
+{% endblock %}

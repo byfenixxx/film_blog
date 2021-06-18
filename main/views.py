@@ -19,7 +19,7 @@ def index(request):
     else:
         all_films = Film.objects.all()
 
-    paginator = Paginator(all_films, 1)
+    paginator = Paginator(all_films, 3)
     page_number = request.GET.get("page", 1)
     page = paginator.get_page(page_number)
     return render(request, "main/index.html", {"page_object": page, "first_page": 1})
