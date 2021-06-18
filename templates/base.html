@@ -40,10 +40,14 @@
         <h2>Menu</h2>
         <ul>
             <li><a href="{% url 'index' %}">Home</a></li>
-            <li><a href="generic.html">Ipsum veroeros</a></li>
-            <li><a href="generic.html">Tempus etiam</a></li>
-            <li><a href="generic.html">Consequat dolor</a></li>
-            <li><a href="elements.html">Elements</a></li>
+            {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'register' %}">Registration</a></li>
+            <li><a href="{% url 'login' %}">Log in</a></li>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'logout' %}">Log out</a></li>
+            {% endif %}
         </ul>
     </nav>
     {% block content %}
@@ -53,7 +57,7 @@
         <div class="inner">
             <section>
                 <h2>Log in</h2>
-                <form method="post" enctype="multipart/form-data">
+                <form method="post">
                     {% csrf_token %}
                     <div class="fields">
                         <div class="field half">
